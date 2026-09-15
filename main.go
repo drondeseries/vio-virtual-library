@@ -26,7 +26,7 @@ import (
 	sdkruntime "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/runtime"
 	"github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/runtimedefault"
 	"github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/runtimehost"
-	"github.com/drondeseries/silo-virtual-library/pkg/release"
+	"github.com/drondeseries/vio-virtual-library/pkg/release"
 	"github.com/hashicorp/go-hclog"
 )
 
@@ -81,7 +81,7 @@ func resolvePluginDataPath(file, fallback string) string {
 	if base == "" {
 		return file
 	}
-	dir := filepath.Join(base, "com.drondeseries.silo-virtual-library")
+	dir := filepath.Join(base, "com.drondeseries.vio-virtual-library")
 	target := filepath.Join(dir, file)
 	if _, err := os.Stat(target); err == nil {
 		return target
@@ -1440,9 +1440,9 @@ func (s *runtimeServer) Configure(_ context.Context, request *pb.ConfigureReques
 		}
 
 		monitorFile, _ := entry.GetValue().AsMap()["monitor_file"].(string)
-		monitorFile = resolvePluginDataPath(monitorFile, ".silo-virtual-library-monitored.json")
+		monitorFile = resolvePluginDataPath(monitorFile, ".vio-virtual-library-monitored.json")
 		prowlarrIndexFile, _ := entry.GetValue().AsMap()["prowlarr_index_file"].(string)
-		prowlarrIndexFile = resolvePluginDataPath(prowlarrIndexFile, ".silo-virtual-library-prowlarr-index.json")
+		prowlarrIndexFile = resolvePluginDataPath(prowlarrIndexFile, ".vio-virtual-library-prowlarr-index.json")
 		movieLibraryID, err := configuredFolderID(entry.GetValue().AsMap()["movie_library_id"])
 		if err != nil {
 			return nil, err
@@ -1458,7 +1458,7 @@ func (s *runtimeServer) Configure(_ context.Context, request *pb.ConfigureReques
 		// the admin UI needs to load so the user can fix the IDs.
 		if movieLibraryID > 0 || seriesLibraryID > 0 {
 			if err := validateLibraryIDs(sdkruntime.Host(), movieLibraryID, seriesLibraryID); err != nil {
-				hclog.New(&hclog.LoggerOptions{Name: "silo-virtual-library"}).Warn("library configuration needs attention", "error", err)
+				hclog.New(&hclog.LoggerOptions{Name: "vio-virtual-library"}).Warn("library configuration needs attention", "error", err)
 			}
 		}
 		stagedMonitorConfig, monitoredItems, err := loadMonitorConfig(monitorConfig{TMDBAPIKey: strings.TrimSpace(tmdbAPIKey), File: strings.TrimSpace(monitorFile), ProwlarrIndexFile: strings.TrimSpace(prowlarrIndexFile), FilterProwlarr: qc.EnableProfiles, Quality: qc})
@@ -1471,7 +1471,7 @@ func (s *runtimeServer) Configure(_ context.Context, request *pb.ConfigureReques
 				s.scheduler.SetInterval(time.Duration(minutes) * time.Minute)
 			}
 		}
-		library, err := newSiloLibrary(sdkruntime.Host(), movieLibraryID, seriesLibraryID, s.resolver)
+		library, err := newVioLibrary(sdkruntime.Host(), movieLibraryID, seriesLibraryID, s.resolver)
 		if err != nil {
 			return nil, err
 		}
@@ -1502,7 +1502,7 @@ func (s *runtimeServer) Configure(_ context.Context, request *pb.ConfigureReques
 		altmountKey, _ := entry.GetValue().AsMap()["altmount_api_key"].(string)
 		altmountMinutes, _ := entry.GetValue().AsMap()["altmount_check_minutes"].(float64)
 		altmountStateFile, _ := entry.GetValue().AsMap()["altmount_state_file"].(string)
-		altmountStateFile = resolvePluginDataPath(altmountStateFile, ".silo-virtual-library-altmount-state.json")
+		altmountStateFile = resolvePluginDataPath(altmountStateFile, ".vio-virtual-library-altmount-state.json")
 		if err := s.monitor.configureAltmount(strings.TrimSpace(altmountURL), strings.TrimSpace(altmountKey), int(altmountMinutes), altmountStateFile); err != nil {
 			return nil, err
 		}
@@ -1535,9 +1535,9 @@ func main() {
 	resolver := &manifestStreamResolver{
 		client:       newProviderHTTPClient(),
 		releaseStore: releaseStore,
-		logger:       hclog.New(&hclog.LoggerOptions{Name: "silo-virtual-library-resolver"}),
+		logger:       hclog.New(&hclog.LoggerOptions{Name: "vio-virtual-library-resolver"}),
 	}
-	monitor := newMediaMonitor(resolver, hclog.New(&hclog.LoggerOptions{Name: "silo-virtual-library-monitor"}))
+	monitor := newMediaMonitor(resolver, hclog.New(&hclog.LoggerOptions{Name: "vio-virtual-library-monitor"}))
 	monitor.releaseStore = releaseStore
 
 	scheduler.SetShowProvider(func(ctx context.Context) ([]string, error) {
@@ -1552,7 +1552,7 @@ func main() {
 		return ids, nil
 	})
 
-	go scheduler.Start(context.Background(), resolvePluginDataPath(".silo-virtual-library-monitored.json", ".silo-virtual-library-monitored.json"))
+	go scheduler.Start(context.Background(), resolvePluginDataPath(".vio-virtual-library-monitored.json", ".vio-virtual-library-monitored.json"))
 
 	runtime := &runtimeServer{
 		manifest:     manifest,
@@ -1562,7 +1562,7 @@ func main() {
 		scheduler:    scheduler,
 	}
 	sdkruntime.Serve(sdkruntime.ServeConfig{
-		Logger: hclog.New(&hclog.LoggerOptions{Name: "silo-virtual-library"}),
+		Logger: hclog.New(&hclog.LoggerOptions{Name: "vio-virtual-library"}),
 		Servers: sdkruntime.CapabilityServers{
 			Runtime:               runtime,
 			VirtualStreamProvider: &virtualStreamProvider{resolver: resolver},

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Release engineering tool for silo-virtual-library.
+Release engineering tool for vio-virtual-library.
 Implements strict SemVer 2.0 validation & comparison, provenance generation,
 asset integrity checking, and catalog update transformations.
 """
@@ -186,19 +186,19 @@ def update_catalog_json(catalog_path: str, tag: str, hashes: dict[str, str]) -> 
     ver = tag.lstrip("v")
     plugin = catalog["plugins"][0]
     plugin["manifest"]["version"] = ver
-    plugin["checksums_url"] = f"https://github.com/drondeseries/silo-virtual-library/releases/download/{tag}/checksums.txt"
+    plugin["checksums_url"] = f"https://github.com/drondeseries/vio-virtual-library/releases/download/{tag}/checksums.txt"
 
     binaries = plugin.get("binaries", {})
     binaries["linux/amd64"] = {
-        "url": f"https://github.com/drondeseries/silo-virtual-library/releases/download/{tag}/plugin-linux-amd64",
+        "url": f"https://github.com/drondeseries/vio-virtual-library/releases/download/{tag}/plugin-linux-amd64",
         "checksum": hashes["linux/amd64"],
     }
     binaries["linux/arm64"] = {
-        "url": f"https://github.com/drondeseries/silo-virtual-library/releases/download/{tag}/plugin-linux-arm64",
+        "url": f"https://github.com/drondeseries/vio-virtual-library/releases/download/{tag}/plugin-linux-arm64",
         "checksum": hashes["linux/arm64"],
     }
     binaries["darwin/arm64"] = {
-        "url": f"https://github.com/drondeseries/silo-virtual-library/releases/download/{tag}/plugin-darwin-arm64",
+        "url": f"https://github.com/drondeseries/vio-virtual-library/releases/download/{tag}/plugin-darwin-arm64",
         "checksum": hashes["darwin/arm64"],
     }
     plugin["binaries"] = binaries

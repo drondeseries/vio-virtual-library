@@ -12,7 +12,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-const virtualStreamProviderID = "com.drondeseries.silo-virtual-library"
+const virtualStreamProviderID = "com.drondeseries.vio-virtual-library"
 
 // virtualStreamProvider exposes the provider-neutral SDK contract. The host
 // asks for candidates at playback time; provider URLs are deliberately not

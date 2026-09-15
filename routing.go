@@ -20,7 +20,7 @@ import (
 
 	pb "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
 	sdkruntime "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/runtime"
-	"github.com/drondeseries/silo-virtual-library/pkg/release"
+	"github.com/drondeseries/vio-virtual-library/pkg/release"
 	"github.com/hashicorp/go-hclog"
 	"google.golang.org/protobuf/types/known/structpb"
 )
@@ -191,7 +191,7 @@ func (m *mediaMonitor) register(ctx context.Context, item monitoredMedia) error 
 	registrar := m.registrar
 	m.mu.Unlock()
 	if registrar == nil {
-		return errors.New("Silo virtual catalog service is not configured")
+		return errors.New("Vio virtual catalog service is not configured")
 	}
 	return registrar.Register(ctx, item)
 }
@@ -200,7 +200,7 @@ func newMediaMonitor(resolver streamResolver, logger hclog.Logger) *mediaMonitor
 	return &mediaMonitor{
 		resolver:   resolver,
 		logger:     logger,
-		config:     monitorConfig{File: ".silo-virtual-library-monitored.json", ProwlarrIndexFile: ".silo-virtual-library-prowlarr-index.json"},
+		config:     monitorConfig{File: ".vio-virtual-library-monitored.json", ProwlarrIndexFile: ".vio-virtual-library-prowlarr-index.json"},
 		items:      map[string]monitoredMedia{},
 		prowlarr:   nil,
 		registered: map[string]struct{}{},
@@ -217,10 +217,10 @@ func (m *mediaMonitor) Configure(c monitorConfig) error {
 
 func loadMonitorConfig(c monitorConfig) (monitorConfig, map[string]monitoredMedia, error) {
 	if c.File == "" {
-		c.File = ".silo-virtual-library-monitored.json"
+		c.File = ".vio-virtual-library-monitored.json"
 	}
 	if c.ProwlarrIndexFile == "" {
-		c.ProwlarrIndexFile = ".silo-virtual-library-prowlarr-index.json"
+		c.ProwlarrIndexFile = ".vio-virtual-library-prowlarr-index.json"
 	}
 	loaded := make(map[string]monitoredMedia)
 	file, err := os.Open(c.File)
@@ -744,7 +744,7 @@ func (s *runtimeServer) Fulfill(ctx context.Context, req *pb.FulfillRequest) (re
 			return nil, fmt.Errorf("register virtual media: %w", err)
 		}
 		s.monitor.markRegistered(item.Key)
-		message = "Virtual media registered in Silo library"
+		message = "Virtual media registered in Vio library"
 		if item.MediaType == "series" {
 			s.monitor.rememberSeriesEpisodes(item.Key, item.Episodes)
 		}
@@ -794,7 +794,7 @@ func (s *runtimeServer) CheckStatus(ctx context.Context, req *pb.CheckStatusRequ
 				return nil, fmt.Errorf("register virtual media: %w", err)
 			}
 			s.monitor.markRegistered(item.Key)
-			message = "Virtual media registered in Silo library"
+			message = "Virtual media registered in Vio library"
 			if item.MediaType == "series" {
 				s.monitor.rememberSeriesEpisodes(item.Key, item.Episodes)
 			}

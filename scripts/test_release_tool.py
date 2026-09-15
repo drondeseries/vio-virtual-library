@@ -159,7 +159,7 @@ class TestCatalogUpdate(unittest.TestCase):
             "plugins": [
                 {
                     "manifest": {
-                        "plugin_id": "com.drondeseries.silo-virtual-library",
+                        "plugin_id": "com.drondeseries.vio-virtual-library",
                         "version": "0.4.99",
                         "global_config_schema": [
                             {
@@ -195,7 +195,7 @@ class TestCatalogUpdate(unittest.TestCase):
             self.assertEqual(plugin["manifest"]["version"], "0.4.100")
             self.assertEqual(
                 plugin["checksums_url"],
-                "https://github.com/drondeseries/silo-virtual-library/releases/download/v0.4.100/checksums.txt",
+                "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.100/checksums.txt",
             )
             self.assertEqual(plugin["binaries"]["linux/amd64"]["checksum"], "a" * 64)
             self.assertEqual(plugin["binaries"]["linux/arm64"]["checksum"], "b" * 64)

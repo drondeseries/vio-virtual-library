@@ -116,7 +116,7 @@ func (c *prowlarrSearchClient) ConfigureIndexFile(path string) error {
 	defer c.mu.Unlock()
 	path = strings.TrimSpace(path)
 	if path == "" {
-		path = ".silo-virtual-library-prowlarr-index.json"
+		path = ".vio-virtual-library-prowlarr-index.json"
 	}
 	c.indexFile = path
 	file, err := os.Open(path)

@@ -18,18 +18,18 @@ type configuredVariantResolver interface {
 	GetConfiguredVariants(string) []runtimehost.VirtualMediaVariant
 }
 
-// siloLibrary registers virtual media through Silo's authenticated RuntimeHost
+// vioLibrary registers virtual media through Silo's authenticated RuntimeHost
 // control plane. It intentionally has no database URL, driver, or SQL.
-type siloLibrary struct {
+type vioLibrary struct {
 	host            *runtimehost.Client
 	movieLibraryID  int
 	seriesLibraryID int
 	resolver        streamResolver
 }
 
-func newSiloLibrary(host *runtimehost.Client, movieLibraryID, seriesLibraryID int, resolver streamResolver) (*siloLibrary, error) {
+func newVioLibrary(host *runtimehost.Client, movieLibraryID, seriesLibraryID int, resolver streamResolver) (*vioLibrary, error) {
 	if host == nil {
-		return nil, errors.New("Silo host services are not ready")
+		return nil, errors.New("Vio host services are not ready")
 	}
 	if movieLibraryID <= 0 {
 		movieLibraryID = 1
@@ -37,7 +37,7 @@ func newSiloLibrary(host *runtimehost.Client, movieLibraryID, seriesLibraryID in
 	if seriesLibraryID <= 0 {
 		seriesLibraryID = 2
 	}
-	return &siloLibrary{host: host, movieLibraryID: movieLibraryID, seriesLibraryID: seriesLibraryID, resolver: resolver}, nil
+	return &vioLibrary{host: host, movieLibraryID: movieLibraryID, seriesLibraryID: seriesLibraryID, resolver: resolver}, nil
 }
 
 // validateLibraryIDs ensures the configured library IDs refer to real libraries
@@ -104,7 +104,7 @@ func movieVirtualURI(mediaType, streamID string) string {
 	return virtualPathPrefix + mediaType + "/" + strings.ReplaceAll(streamID, ":", "/")
 }
 
-func (l *siloLibrary) Register(ctx context.Context, item monitoredMedia) error {
+func (l *vioLibrary) Register(ctx context.Context, item monitoredMedia) error {
 	// The SDK client rejects registrations with an empty title before the RPC
 	// even leaves the process.  Guard here so callers get a clear diagnostic
 	// instead of a generic gRPC error.
@@ -179,7 +179,7 @@ func (l *siloLibrary) Register(ctx context.Context, item monitoredMedia) error {
 	}
 	_, err := l.host.UpsertVirtualMedia(ctx, req)
 	if err != nil {
-		return fmt.Errorf("register virtual media with Silo: %w", err)
+		return fmt.Errorf("register virtual media with Vio: %w", err)
 	}
 	return nil
 }
@@ -194,7 +194,7 @@ func configuredVariants(resolver streamResolver, virtualURI string) []runtimehos
 	return nil
 }
 
-func (l *siloLibrary) Reconcile(ctx context.Context, sourceKey string, keepMediaIDs []string) error {
+func (l *vioLibrary) Reconcile(ctx context.Context, sourceKey string, keepMediaIDs []string) error {
 	_, err := l.host.ReconcileVirtualMedia(ctx, sourceKey, keepMediaIDs, []string{strconv.Itoa(l.movieLibraryID), strconv.Itoa(l.seriesLibraryID)})
 	return err
 }

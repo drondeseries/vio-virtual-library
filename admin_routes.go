@@ -48,7 +48,12 @@ func redactError(err error) string {
 }
 
 func (a *adminRoutes) Handle(ctx context.Context, req *pb.HandleHTTPRequest) (*pb.HandleHTTPResponse, error) {
-	if req == nil || !strings.EqualFold(req.GetHeaders()["X-Silo-User-Role"], "admin") {
+	headers := req.GetHeaders()
+	role := headers["X-Vio-User-Role"]
+	if role == "" {
+		role = headers["X-Silo-User-Role"] // legacy host compat
+	}
+	if req == nil || !strings.EqualFold(role, "admin") {
 		return adminJSON(http.StatusForbidden, map[string]string{"error": "admin access required"})
 	}
 	path := strings.TrimRight(req.GetPath(), "/")

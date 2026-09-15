@@ -18,7 +18,7 @@ import (
 	pb "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
 	publicmanifest "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/manifest"
 	"github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/runtimehost"
-	"github.com/drondeseries/silo-virtual-library/pkg/release"
+	"github.com/drondeseries/vio-virtual-library/pkg/release"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 

@@ -1,6 +1,6 @@
 {
-  "plugin_id": "com.drondeseries.silo-virtual-library",
-  "version": "0.4.116",
+  "plugin_id": "com.drondeseries.vio-virtual-library",
+  "version": "0.4.117",
   "silo_api_version": "v1",
   "capabilities": [
     {
@@ -76,14 +76,14 @@
     }
   ],
   "presentation": {
-    "display_name": "Silo Virtual Library",
+    "display_name": "Vio Virtual Library",
     "summary": "Zero-storage virtual playback backed by dynamic streaming provider resolution.",
-    "description_markdown": "Registers and resolves host-managed `virtual://` virtual media through Silo's authenticated plugin control plane, without database credentials or stored media files.",
-    "setup_markdown": "Before enabling the request integration, enter the complete secret streaming provider manifest URL and pick one Movies library and one Series library from the host’s library list. Add an optional TMDB token for authoritative worldwide digital/physical release gating. No database URL or media path is required.",
-    "homepage_url": "https://github.com/drondeseries/silo-virtual-library",
-    "source_url": "https://github.com/drondeseries/silo-virtual-library",
-    "support_url": "https://github.com/drondeseries/silo-virtual-library/issues",
-    "changelog_url": "https://github.com/drondeseries/silo-virtual-library/releases",
+    "description_markdown": "Registers and resolves host-managed `virtual://` virtual media through Vio's authenticated plugin control plane, without database credentials or stored media files.",
+    "setup_markdown": "Before enabling the request integration, enter the complete secret streaming provider manifest URL and pick one Movies library and one Series library from the host\u2019s library list. Add an optional TMDB token for authoritative worldwide digital/physical release gating. No database URL or media path is required.",
+    "homepage_url": "https://github.com/drondeseries/vio-virtual-library",
+    "source_url": "https://github.com/drondeseries/vio-virtual-library",
+    "support_url": "https://github.com/drondeseries/vio-virtual-library/issues",
+    "changelog_url": "https://github.com/drondeseries/vio-virtual-library/releases",
     "publisher_name": "drondeseries",
     "publisher_url": "https://github.com/drondeseries",
     "license_spdx": "NOASSERTION"
@@ -107,14 +107,14 @@
       "key": "streaming",
       "title": "streaming provider",
       "description": "Connection to the configured streaming provider Stremio addon.",
-      "json_schema": "{\"type\": \"object\", \"properties\": {\"manifest_url\": {\"type\": \"string\", \"format\": \"uri\", \"maxLength\": 4096}, \"movie_library_id\": {\"type\": \"integer\", \"minimum\": 1, \"default\": 1}, \"series_library_id\": {\"type\": \"integer\", \"minimum\": 1, \"default\": 2}, \"tmdb_api_key\": {\"type\": \"string\", \"maxLength\": 4096}, \"monitor_file\": {\"type\": \"string\", \"maxLength\": 4096, \"default\": \".silo-virtual-library-monitored.json\"}, \"allow_insecure_http\": {\"type\": \"boolean\", \"default\": false}, \"schedule_refresh_minutes\": {\"type\": \"integer\", \"minimum\": 30, \"maximum\": 10080, \"default\": 360}, \"cache_ttl_minutes\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 10080, \"default\": 10}, \"enable_quality_profiles\": {\"type\": \"boolean\", \"default\": false}, \"custom_format_preset\": {\"type\": \"string\", \"enum\": [\"custom\", \"english-original\", \"english-strict\", \"original-or-english\", \"clean-quality\", \"audio-hd\", \"repack-proper\", \"top-web-sources\", \"anime-enhanced\", \"web-tier-01\", \"web-tier-02\", \"remux-tier-01\", \"remux-tier-02\", \"trash-recommended\"], \"default\": \"custom\"}, \"quality_profiles\": {\"type\": \"array\", \"maxItems\": 10, \"items\": {\"type\": \"object\", \"properties\": {\"label\": {\"type\": \"string\", \"minLength\": 1, \"maxLength\": 128}, \"resolution\": {\"type\": \"string\", \"maxLength\": 64}, \"include_regex\": {\"type\": \"string\", \"maxLength\": 1024}, \"exclude_regex\": {\"type\": \"string\", \"maxLength\": 1024}, \"preferred_order\": {\"type\": \"integer\", \"minimum\": 0, \"maximum\": 10000}, \"codec_video\": {\"type\": \"string\", \"maxLength\": 64}, \"codec_audio\": {\"type\": \"string\", \"maxLength\": 64}, \"hdr\": {\"type\": \"string\", \"maxLength\": 64}, \"exclude_hdr\": {\"type\": \"string\", \"maxLength\": 64}}, \"required\": [\"label\"], \"additionalProperties\": false}}, \"custom_formats\": {\"type\": \"array\", \"maxItems\": 50, \"items\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\", \"minLength\": 1, \"maxLength\": 128}, \"regex\": {\"type\": \"string\", \"minLength\": 1, \"maxLength\": 1024}, \"score\": {\"type\": \"integer\", \"minimum\": -10000, \"maximum\": 10000}, \"reject\": {\"type\": \"boolean\", \"default\": false}}, \"required\": [\"name\", \"regex\"], \"additionalProperties\": false}}, \"fallback_to_any_stream\": {\"type\": \"boolean\", \"default\": false}, \"indexer_rss_url\": {\"type\": \"string\", \"format\": \"uri\", \"maxLength\": 4096, \"description\": \"Your Prowlarr base URL (e.g. https://prowlarr.example.com). Searches all enabled indexers in one request.\"}, \"indexer_api_key\": {\"type\": \"string\", \"maxLength\": 4096, \"description\": \"API key for your Prowlarr instance. Leave blank if not required.\"}, \"indexer_rss_check_minutes\": {\"type\": \"integer\", \"minimum\": 15, \"maximum\": 10080, \"default\": 15, \"description\": \"How often to check Prowlarr for new releases. Minimum 15 minutes.\"}, \"quality_preset\": {\"type\": \"string\", \"enum\": [\"custom\", \"balanced\", \"4k-hdr\", \"4k-dolby-vision\", \"no-dolby-vision\", \"no-hdr\", \"compatibility\", \"anime\"], \"default\": \"custom\"}, \"prowlarr_index_file\": {\"type\": \"string\", \"maxLength\": 4096, \"default\": \".silo-virtual-library-prowlarr-index.json\"}, \"single_stream_with_failover\": {\"type\": \"boolean\", \"default\": true}, \"altmount_url\": {\"type\": \"string\", \"format\": \"uri\", \"maxLength\": 4096}, \"altmount_api_key\": {\"type\": \"string\", \"maxLength\": 4096}, \"altmount_check_minutes\": {\"type\": \"integer\", \"minimum\": 5, \"maximum\": 10080, \"default\": 15}, \"altmount_state_file\": {\"type\": \"string\", \"maxLength\": 4096, \"default\": \".silo-virtual-library-altmount-state.json\"}}, \"required\": [\"manifest_url\"], \"additionalProperties\": false}",
+      "json_schema": "{\"type\": \"object\", \"properties\": {\"manifest_url\": {\"type\": \"string\", \"format\": \"uri\", \"maxLength\": 4096}, \"movie_library_id\": {\"type\": \"integer\", \"minimum\": 1, \"default\": 1}, \"series_library_id\": {\"type\": \"integer\", \"minimum\": 1, \"default\": 2}, \"tmdb_api_key\": {\"type\": \"string\", \"maxLength\": 4096}, \"monitor_file\": {\"type\": \"string\", \"maxLength\": 4096, \"default\": \".vio-virtual-library-monitored.json\"}, \"allow_insecure_http\": {\"type\": \"boolean\", \"default\": false}, \"schedule_refresh_minutes\": {\"type\": \"integer\", \"minimum\": 30, \"maximum\": 10080, \"default\": 360}, \"cache_ttl_minutes\": {\"type\": \"integer\", \"minimum\": 1, \"maximum\": 10080, \"default\": 10}, \"enable_quality_profiles\": {\"type\": \"boolean\", \"default\": false}, \"custom_format_preset\": {\"type\": \"string\", \"enum\": [\"custom\", \"english-original\", \"english-strict\", \"original-or-english\", \"clean-quality\", \"audio-hd\", \"repack-proper\", \"top-web-sources\", \"anime-enhanced\", \"web-tier-01\", \"web-tier-02\", \"remux-tier-01\", \"remux-tier-02\", \"trash-recommended\"], \"default\": \"custom\"}, \"quality_profiles\": {\"type\": \"array\", \"maxItems\": 10, \"items\": {\"type\": \"object\", \"properties\": {\"label\": {\"type\": \"string\", \"minLength\": 1, \"maxLength\": 128}, \"resolution\": {\"type\": \"string\", \"maxLength\": 64}, \"include_regex\": {\"type\": \"string\", \"maxLength\": 1024}, \"exclude_regex\": {\"type\": \"string\", \"maxLength\": 1024}, \"preferred_order\": {\"type\": \"integer\", \"minimum\": 0, \"maximum\": 10000}, \"codec_video\": {\"type\": \"string\", \"maxLength\": 64}, \"codec_audio\": {\"type\": \"string\", \"maxLength\": 64}, \"hdr\": {\"type\": \"string\", \"maxLength\": 64}, \"exclude_hdr\": {\"type\": \"string\", \"maxLength\": 64}}, \"required\": [\"label\"], \"additionalProperties\": false}}, \"custom_formats\": {\"type\": \"array\", \"maxItems\": 50, \"items\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\", \"minLength\": 1, \"maxLength\": 128}, \"regex\": {\"type\": \"string\", \"minLength\": 1, \"maxLength\": 1024}, \"score\": {\"type\": \"integer\", \"minimum\": -10000, \"maximum\": 10000}, \"reject\": {\"type\": \"boolean\", \"default\": false}}, \"required\": [\"name\", \"regex\"], \"additionalProperties\": false}}, \"fallback_to_any_stream\": {\"type\": \"boolean\", \"default\": false}, \"indexer_rss_url\": {\"type\": \"string\", \"format\": \"uri\", \"maxLength\": 4096, \"description\": \"Your Prowlarr base URL (e.g. https://prowlarr.example.com). Searches all enabled indexers in one request.\"}, \"indexer_api_key\": {\"type\": \"string\", \"maxLength\": 4096, \"description\": \"API key for your Prowlarr instance. Leave blank if not required.\"}, \"indexer_rss_check_minutes\": {\"type\": \"integer\", \"minimum\": 15, \"maximum\": 10080, \"default\": 15, \"description\": \"How often to check Prowlarr for new releases. Minimum 15 minutes.\"}, \"quality_preset\": {\"type\": \"string\", \"enum\": [\"custom\", \"balanced\", \"4k-hdr\", \"4k-dolby-vision\", \"no-dolby-vision\", \"no-hdr\", \"compatibility\", \"anime\"], \"default\": \"custom\"}, \"prowlarr_index_file\": {\"type\": \"string\", \"maxLength\": 4096, \"default\": \".vio-virtual-library-prowlarr-index.json\"}, \"single_stream_with_failover\": {\"type\": \"boolean\", \"default\": true}, \"altmount_url\": {\"type\": \"string\", \"format\": \"uri\", \"maxLength\": 4096}, \"altmount_api_key\": {\"type\": \"string\", \"maxLength\": 4096}, \"altmount_check_minutes\": {\"type\": \"integer\", \"minimum\": 5, \"maximum\": 10080, \"default\": 15}, \"altmount_state_file\": {\"type\": \"string\", \"maxLength\": 4096, \"default\": \".vio-virtual-library-altmount-state.json\"}}, \"required\": [\"manifest_url\"], \"additionalProperties\": false}",
       "required": true,
       "admin_form": {
         "fields": [
           {
             "key": "movie_library_id",
             "label": "Movies Library",
-            "description": "Destination Silo Movies library. Need one? Create it at [Settings -> Libraries](/admin/libraries) and use the \"Add Virtual\" button on the Folders tab — no local storage required.",
+            "description": "Destination Vio Movies library. Need one? Create it at [Settings -> Libraries](/admin/libraries) and use the \"Add Virtual\" button on the Folders tab \u2014 no local storage required.",
             "control": "ADMIN_FORM_CONTROL_SELECT",
             "dynamic_options": true,
             "required": false
@@ -122,7 +122,7 @@
           {
             "key": "series_library_id",
             "label": "Series Library",
-            "description": "Destination Silo Series library. Need one? Create it at [Settings -> Libraries](/admin/libraries) and use the \"Add Virtual\" button on the Folders tab — no local storage required.",
+            "description": "Destination Vio Series library. Need one? Create it at [Settings -> Libraries](/admin/libraries) and use the \"Add Virtual\" button on the Folders tab \u2014 no local storage required.",
             "control": "ADMIN_FORM_CONTROL_SELECT",
             "dynamic_options": true,
             "required": false
@@ -132,7 +132,7 @@
             "label": "Manifest URL",
             "description": "Full streaming provider manifest URL (e.g. AIOStreams, StreamNZB, or any Stremio-compatible addon). Must include the full tokenized path ending in /manifest.json.",
             "control": "ADMIN_FORM_CONTROL_TEXT",
-            "placeholder": "https://…/manifest.json",
+            "placeholder": "https://\u2026/manifest.json",
             "required": true,
             "secret": false
           },
@@ -147,7 +147,7 @@
           {
             "key": "single_stream_with_failover",
             "label": "Show One Stream With Failover",
-            "description": "Expose only the preferred stream while Silo retains alternate streams for automatic failover.",
+            "description": "Expose only the preferred stream while Vio retains alternate streams for automatic failover.",
             "control": "ADMIN_FORM_CONTROL_SWITCH"
           },
           {
@@ -337,7 +337,7 @@
           {
             "key": "indexer_rss_url",
             "label": "Prowlarr URL",
-            "description": "Optional Prowlarr base URL for release monitoring. If Silo and Prowlarr run in Docker on the same host, use the container name (e.g. http://prowlarr:9696) to bypass auth gates. Leave blank to skip release monitoring.",
+            "description": "Optional Prowlarr base URL for release monitoring. If Vio and Prowlarr run in Docker on the same host, use the container name (e.g. http://prowlarr:9696) to bypass auth gates. Leave blank to skip release monitoring.",
             "control": "ADMIN_FORM_CONTROL_TEXT",
             "placeholder": "https://prowlarr.example.com"
           },
@@ -359,21 +359,21 @@
           {
             "key": "prowlarr_index_file",
             "label": "Prowlarr Release Index File",
-            "description": "Optional local rolling index for the one-request Prowlarr feed. Entries expire after 14 days; registered Silo media is not affected.",
+            "description": "Optional local rolling index for the one-request Prowlarr feed. Entries expire after 14 days; registered Vio media is not affected.",
             "control": "ADMIN_FORM_CONTROL_TEXT",
-            "placeholder": ".silo-virtual-library-prowlarr-index.json"
+            "placeholder": ".vio-virtual-library-prowlarr-index.json"
           },
           {
             "key": "monitor_file",
             "label": "Monitored Queue File",
-            "description": "File path for persisting the monitored media queue. Defaults to .silo-virtual-library-monitored.json in the plugin work directory.",
+            "description": "File path for persisting the monitored media queue. Defaults to .vio-virtual-library-monitored.json in the plugin work directory.",
             "control": "ADMIN_FORM_CONTROL_TEXT",
-            "placeholder": ".silo-virtual-library-monitored.json"
+            "placeholder": ".vio-virtual-library-monitored.json"
           },
           {
             "key": "cache_ttl_minutes",
             "label": "Candidate Cache TTL (minutes)",
-            "description": "How long stream candidates are cached before re-fetching from the provider (1–10080 minutes). Lower = fresher results, higher = faster playback.",
+            "description": "How long stream candidates are cached before re-fetching from the provider (1\u201310080 minutes). Lower = fresher results, higher = faster playback.",
             "control": "ADMIN_FORM_CONTROL_NUMBER",
             "placeholder": "10"
           },
@@ -417,7 +417,7 @@
             "label": "AltMount State File",
             "description": "Optional local cache of AltMount completed/failed releases. Survives restarts so known-good releases stay preferred.",
             "control": "ADMIN_FORM_CONTROL_TEXT",
-            "placeholder": ".silo-virtual-library-altmount-state.json"
+            "placeholder": ".vio-virtual-library-altmount-state.json"
           }
         ],
         "sections": [

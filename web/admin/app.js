@@ -127,7 +127,7 @@ async function postAction(path, key, btn) {
     data = await res.json();
     if (!res.ok) toast(data.error || data.message || 'Request failed', 'error');
   } catch (_) {
-    toast('Network error while contacting Silo', 'error');
+    toast('Network error while contacting Vio', 'error');
   }
   await load();
   return data;

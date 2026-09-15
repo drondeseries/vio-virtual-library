@@ -10,7 +10,7 @@ import (
 	"time"
 
 	pb "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
-	"github.com/drondeseries/silo-virtual-library/pkg/release"
+	"github.com/drondeseries/vio-virtual-library/pkg/release"
 	"github.com/hashicorp/go-hclog"
 	"google.golang.org/protobuf/types/known/structpb"
 )
@@ -76,7 +76,7 @@ func TestAdminScheduleJSONAndRefresh(t *testing.T) {
 	getReq := &pb.HandleHTTPRequest{
 		Path:    "/admin/virtual-library/schedule",
 		Method:  "GET",
-		Headers: map[string]string{"X-Silo-User-Role": "admin"},
+		Headers: map[string]string{"X-Vio-User-Role": "admin"},
 	}
 	resp, err := admin.Handle(context.Background(), getReq)
 	if err != nil {
@@ -146,7 +146,7 @@ func TestSearchQueueItemSortsReleasesByCustomFormats(t *testing.T) {
 	req := &pb.HandleHTTPRequest{
 		Path:    "/admin/virtual-library/queue/search",
 		Method:  "POST",
-		Headers: map[string]string{"X-Silo-User-Role": "admin"},
+		Headers: map[string]string{"X-Vio-User-Role": "admin"},
 		Query: &structpb.Struct{
 			Fields: map[string]*structpb.Value{
 				"key": structpb.NewStringValue("movie:inception"),

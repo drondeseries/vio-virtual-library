@@ -104,7 +104,7 @@ func (c *altmountStateClient) ConfigureIndexFile(path string) error {
 	defer c.mu.Unlock()
 	path = strings.TrimSpace(path)
 	if path == "" {
-		path = ".silo-virtual-library-altmount-state.json"
+		path = ".vio-virtual-library-altmount-state.json"
 	}
 	c.indexFile = path
 	file, err := os.Open(path)

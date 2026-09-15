@@ -1,4 +1,4 @@
-module github.com/drondeseries/silo-virtual-library
+module github.com/drondeseries/vio-virtual-library
 
 replace github.com/Silo-Server/silo-plugin-sdk => github.com/drondeseries/silo-plugin-sdk v0.13.2-virtual.2
 

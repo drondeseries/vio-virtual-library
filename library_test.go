@@ -15,14 +15,14 @@ func TestMovieVirtualURIReturnsEmptyForSeries(t *testing.T) {
 	}
 }
 
-func TestNewSiloLibraryDefaultsMissingIDs(t *testing.T) {
+func TestNewVioLibraryDefaultsMissingIDs(t *testing.T) {
 	host := &runtimehost.Client{}
 	resolver := &manifestStreamResolver{}
 
 	t.Run("zero IDs default to 1 and 2", func(t *testing.T) {
-		lib, err := newSiloLibrary(host, 0, 0, resolver)
+		lib, err := newVioLibrary(host, 0, 0, resolver)
 		if err != nil {
-			t.Fatalf("newSiloLibrary(0,0): %v", err)
+			t.Fatalf("newVioLibrary(0,0): %v", err)
 		}
 		if lib.movieLibraryID != 1 {
 			t.Errorf("movieLibraryID = %d, want 1", lib.movieLibraryID)
@@ -33,9 +33,9 @@ func TestNewSiloLibraryDefaultsMissingIDs(t *testing.T) {
 	})
 
 	t.Run("negative IDs default to 1 and 2", func(t *testing.T) {
-		lib, err := newSiloLibrary(host, -5, -1, resolver)
+		lib, err := newVioLibrary(host, -5, -1, resolver)
 		if err != nil {
-			t.Fatalf("newSiloLibrary(-5,-1): %v", err)
+			t.Fatalf("newVioLibrary(-5,-1): %v", err)
 		}
 		if lib.movieLibraryID != 1 {
 			t.Errorf("movieLibraryID = %d, want 1", lib.movieLibraryID)
@@ -46,9 +46,9 @@ func TestNewSiloLibraryDefaultsMissingIDs(t *testing.T) {
 	})
 
 	t.Run("explicit IDs are preserved", func(t *testing.T) {
-		lib, err := newSiloLibrary(host, 42, 99, resolver)
+		lib, err := newVioLibrary(host, 42, 99, resolver)
 		if err != nil {
-			t.Fatalf("newSiloLibrary(42,99): %v", err)
+			t.Fatalf("newVioLibrary(42,99): %v", err)
 		}
 		if lib.movieLibraryID != 42 {
 			t.Errorf("movieLibraryID = %d, want 42", lib.movieLibraryID)
@@ -59,7 +59,7 @@ func TestNewSiloLibraryDefaultsMissingIDs(t *testing.T) {
 	})
 
 	t.Run("nil host returns error regardless of IDs", func(t *testing.T) {
-		_, err := newSiloLibrary(nil, 1, 2, resolver)
+		_, err := newVioLibrary(nil, 1, 2, resolver)
 		if err == nil {
 			t.Fatal("expected error for nil host, got nil")
 		}
