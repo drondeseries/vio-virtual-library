@@ -3,7 +3,7 @@
     {
       "manifest": {
         "plugin_id": "com.drondeseries.vio-virtual-library",
-        "version": "0.4.117",
+        "version": "0.4.118",
         "silo_api_version": "v1",
         "capabilities": [
           {
@@ -443,19 +443,19 @@
         ]
       },
       "repo_url": "https://github.com/drondeseries/vio-virtual-library",
-      "checksums_url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.116/checksums.txt",
+      "checksums_url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.118/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.116/plugin-linux-amd64",
-          "checksum": "8cd2ec96e04f5bd3ab334c047c4951d1736218214602f40eb529536959a657c6"
+          "url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.118/plugin-linux-amd64",
+          "checksum": "6d9d2f8a54043ef3c3e2c731df948bc8a410013a105a5cc083d28dba5fd978d8"
         },
         "linux/arm64": {
-          "url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.116/plugin-linux-arm64",
-          "checksum": "33e5c7419badea5b8eba90b5b9808de2197eae63b2b8971e8830b48dcfd0c045"
+          "url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.118/plugin-linux-arm64",
+          "checksum": "5305cd55db056e9910d806ddd252d1aec7d4383247db82e6090ba38c9ad707cf"
         },
         "darwin/arm64": {
-          "url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.116/plugin-darwin-arm64",
-          "checksum": "e0d5cdd7a43ceb6e352d732d1b9e231414e11eabe5f0ee3d0cf0621a7836403c"
+          "url": "https://github.com/drondeseries/vio-virtual-library/releases/download/v0.4.118/plugin-darwin-arm64",
+          "checksum": "c4140c92f775530fc198294d986014c0678238a43c4000a5a5cc65ba95bfcbc0"
         }
       }
     }
